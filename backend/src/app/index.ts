@@ -31,8 +31,22 @@ app.get("/characters", async (req: Request, res: Response) => {
 			query.name = { $regex: `^${startswith}`, $options: "i" }; // Case-insensitive
 		}
 
-		const data = await Character.find(query).sort({ id: 1 }).skip(offset).limit(CHARACTERS_PER_PAGE);
+		const data = await Character.find(query)
+			.sort({ id: 1 })
+			.skip(offset)
+			.limit(CHARACTERS_PER_PAGE);
 
+		res.status(200).json(data);
+	} catch (err) {
+		console.error("Error fetching characters:", err);
+		res.status(500).json({ message: "Internal server error", error: err });
+	}
+});
+
+app.get("/character/:name", async (req: Request, res: Response) => {
+	try {
+		const { name } = req.params;
+		const data = await Character.findOne({ name: { $regex: `^${name}$`, $options: "i" } });
 		res.status(200).json(data);
 	} catch (err) {
 		console.error("Error fetching characters:", err);
