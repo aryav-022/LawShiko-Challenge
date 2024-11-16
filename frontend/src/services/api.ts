@@ -6,8 +6,8 @@ export const api = axios.create({
 	baseURL: API_BASE_URL,
 });
 
-export const fetchCharacters = async (page: number) => {
-	const response = await api.get(`characters?page=${page}`);
+export const fetchCharacters = async (page: number, query?: string) => {
+	const response = await api.get(`characters?page=${page}&startswith=${query}`);
 	return response.data;
 };
 
