@@ -8,6 +8,11 @@ export const api = axios.create({
 
 export const fetchCharacters = async (page: number) => {
 	const response = await api.get(`characters?page=${page}`);
+	return response.data;
+};
+
+export const fetchCharacter = async (name: string) => {
+	const response = await api.get(`character/${name}`);
 	console.log(response);
 	return response.data;
 };
