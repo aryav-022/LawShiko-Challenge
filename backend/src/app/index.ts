@@ -27,7 +27,7 @@ app.get("/characters", async (req: Request, res: Response) => {
 		const offset = (page - 1) * CHARACTERS_PER_PAGE;
 
 		const query: Record<string, any> = {};
-		if (startswith) {
+		if (startswith && startswith !== "undefined") {
 			query.name = { $regex: `^${startswith}`, $options: "i" }; // Case-insensitive
 		}
 
